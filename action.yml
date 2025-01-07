@@ -1,0 +1,16 @@
+name: "Action for Lark Notify"
+description: "Action for Lark Notify with robot"
+author: "kevin"
+inputs:
+  name:
+    description: "The name of the person to greet"
+    required: true
+outputs:
+  message:
+    description: "The greeting message"
+runs:
+  using: "node20"
+  main: "index.js"
+branding:
+  icon: "terminal"
+  color: "blue"
