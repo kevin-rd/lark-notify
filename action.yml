@@ -10,7 +10,7 @@ outputs:
     description: "The greeting message"
 runs:
   using: "node20"
-  main: "index.js"
+  main: "dist/index.js"
 branding:
   icon: "terminal"
   color: "blue"
