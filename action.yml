@@ -16,8 +16,11 @@ inputs:
   header_content:
     description: "The content of Header"
     required: true
-  env_tag:
+  message_env_tag:
     description: "The deployment env tag"
+    required: true
+  message_version:
+    description: "The deployment version"
     required: true
 
 outputs:

@@ -25680,7 +25680,8 @@ async function run() {
     const { LARK_WEBHOOK, LARK_SECRET } = process.env;
     const header_template = core.getInput('header_template');
     const header_content = core.getInput('header_content');
-    const env_tag = core.getInput('env_tag');
+    const env_tag = core.getInput('message_env_tag');
+    const version = core.getInput('message_version');
     const card_elements = [
         {
             tag: "div",
@@ -25699,7 +25700,7 @@ async function run() {
         {
             tag: "div",
             text: {
-                content: "**Version** ${{ steps.meta.outputs.version }}",
+                content: `**Version** ${version}`,
                 tag: "lark_md"
             }
         },
@@ -25713,7 +25714,7 @@ async function run() {
         {
             tag: "div",
             text: {
-                content: `**Action URL** https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`,
+                content: `**Action URL** [${process.env.GITHUB_RUN_ID}](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})`,
                 tag: "lark_md"
             }
         }
