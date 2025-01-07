@@ -25635,7 +25635,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 2813:
+/***/ 4724:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -25674,20 +25674,76 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.run = run;
 const core = __importStar(__nccwpck_require__(3962));
 async function run() {
-    try {
-        const name = core.getInput('name');
-        const message = `Hello, ${name}! This is a TypeScript GitHub Action!`;
-        core.setOutput('message', message);
-        console.log(message);
-    }
-    catch (error) {
-        if (error instanceof Error)
-            core.setFailed(error.message);
-    }
+    const { LARK_WEBHOOK, LARK_SECRET } = process.env;
+    const header_template = core.getInput('header_template');
+    const header_content = core.getInput('header_content');
+    const env_tag = core.getInput('env_tag');
+    const card_elements = [
+        {
+            tag: "div",
+            text: {
+                content: `**Repo** [${process.env.GITHUB_REPOSITORY}](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY})`,
+                tag: "lark_md"
+            }
+        },
+        {
+            tag: "div",
+            text: {
+                content: `**Env** ${env_tag}`,
+                tag: "lark_md"
+            }
+        },
+        {
+            tag: "div",
+            text: {
+                content: "**Version** ${{ steps.meta.outputs.version }}",
+                tag: "lark_md"
+            }
+        },
+        {
+            tag: "div",
+            text: {
+                content: `**Actor** ${process.env.GITHUB_ACTOR}`,
+                tag: "lark_md"
+            }
+        },
+        {
+            tag: "div",
+            text: {
+                content: `**Action URL** https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`,
+                tag: "lark_md"
+            }
+        }
+    ];
+    await fetch(LARK_WEBHOOK, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            msg_type: 'interactive',
+            card: {
+                header: {
+                    template: header_template,
+                    title: {
+                        content: header_content,
+                        tag: 'plain_text'
+                    }
+                },
+                elements: card_elements
+            }
+        })
+    }).then(async (response) => {
+        if (!response.ok) {
+            core.setFailed(`HTTP error! Status: ${response.status}. Message: ${await response.text()}`);
+        }
+        core.setOutput('message', 'notify lark success!');
+        return response.json();
+    });
 }
-run();
 
 
 /***/ }),
@@ -27595,12 +27651,21 @@ module.exports = parseParams
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(2813);
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+var exports = __webpack_exports__;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+/**
+ * The entrypoint for the action.
+ */
+const main_1 = __nccwpck_require__(4724);
+(0, main_1.run)();
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;

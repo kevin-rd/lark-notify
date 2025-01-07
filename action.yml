@@ -10,8 +10,14 @@ runs:
   main: "dist/index.js"
 
 inputs:
-  name:
-    description: "The name to greet"
+  header_template:
+    description: "The color of Header"
+    required: true
+  header_content:
+    description: "The content of Header"
+    required: true
+  env_tag:
+    description: "The deployment env tag"
     required: true
 
 outputs:
