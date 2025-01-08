@@ -15,35 +15,35 @@ export async function run() {
     {
       tag: "div",
       text: {
-        content: `**Repo** [${process.env.GITHUB_REPOSITORY}](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY})`,
+        content: `**仓库** [${process.env.GITHUB_REPOSITORY}](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY})`,
         tag: "lark_md"
       }
     },
     {
       tag: "div",
       text: {
-        content: `**Env** ${env_tag}`,
+        content: `**环境** ${env_tag}`,
         tag: "lark_md"
       }
     },
     {
       tag: "div",
       text: {
-        content: `**Version** ${version}`,
+        content: `**版本** ${version}`,
         tag: "lark_md"
       }
     },
     {
       tag: "div",
       text: {
-        content: `**Actor** ${process.env.GITHUB_ACTOR}`,
+        content: `**作者** ${process.env.GITHUB_ACTOR}`,
         tag: "lark_md"
       }
     },
     {
       tag: "div",
       text: {
-        content: `**Action URL** [${process.env.GITHUB_RUN_ID}](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})`,
+        content: `**URL** [${process.env.GITHUB_RUN_ID}](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})`,
         tag: "lark_md"
       }
     }

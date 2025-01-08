@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Lark Notification
-        uses: kevin-rd/lark-notify@v1.4
+        uses: kevin-rd/lark-notify@v1.6
         env:
           LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
         with:
