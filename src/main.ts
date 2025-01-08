@@ -3,9 +3,10 @@ import * as core from '@actions/core';
 
 export async function run() {
 
+  // env variables
   const {LARK_WEBHOOK, LARK_SECRET} = process.env
 
-
+  // input variables
   const header_template = core.getInput('header_template')
   const header_content = core.getInput('header_content')
   const env_tag = core.getInput('message_env_tag')
@@ -57,6 +58,11 @@ export async function run() {
     }
   ]
 
+  // filter commit logs
+  const filtered_card_elements = card_elements.filter(element => {
+    return !(element.text.content.includes('修改记录') && !commit_logs)
+  })
+
   await fetch(LARK_WEBHOOK!, {
     method: 'POST',
     headers: {
@@ -72,7 +78,7 @@ export async function run() {
             tag: 'plain_text'
           }
         },
-        elements: card_elements
+        elements: filtered_card_elements
       }
     })
   }).then(async response => {

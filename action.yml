@@ -2,8 +2,8 @@ name: "Action for Lark Notify"
 description: "Action for Lark Notify with robot"
 author: "kevin"
 branding:
-  icon: "terminal"
-  color: "blue"
+  icon: send
+  color: blue
 
 runs:
   using: "node20"
