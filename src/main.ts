@@ -10,6 +10,7 @@ export async function run() {
   const header_content = core.getInput('header_content')
   const env_tag = core.getInput('message_env_tag')
   const version = core.getInput('message_version')
+  const commit_logs = core.getInput('message_commit_logs')
 
   const card_elements = [
     {
@@ -44,6 +45,13 @@ export async function run() {
       tag: "div",
       text: {
         content: `**URL** [${process.env.GITHUB_RUN_ID}](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})`,
+        tag: "lark_md"
+      }
+    },
+    {
+      tag: "div",
+      text: {
+        content: `**修改记录**\n ${commit_logs}`,
         tag: "lark_md"
       }
     }

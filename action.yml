@@ -22,6 +22,9 @@ inputs:
   message_version:
     description: "The deployment version"
     required: true
+  message_commit_logs:
+    description: "The commit logs since last"
+    required: false
 
 outputs:
   message:

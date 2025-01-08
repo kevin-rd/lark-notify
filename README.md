@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Lark Notification
-        uses: kevin-rd/lark-notify@v1.6
+        uses: kevin-rd/lark-notify@main
         env:
           LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
         with:
@@ -27,6 +27,7 @@ jobs:
           header_content: 'Greetings from the Lark Notify Action'
           message_env_tag: 'devint'
           message_version: 'v1.0.0'
+          message_commit_logs: '4196e10 - ci(deploy-k8s): 更新 GitHub Actions 工作流 (kevin-rd)'
 ```
 
 
