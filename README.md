@@ -15,19 +15,33 @@ jobs:
     name: Lark Notification
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get Github version info
+        id: meta
+        run: |
+          echo "version=$(git describe --always --tags --match='v*') (commit=`echo ${GITHUB_SHA} | cut -c1-8`)" >> "$GITHUB_OUTPUT"
+
+      - name: Get commit logs
+        id: commit_step
+        run: |
+          commit_logs=$(git log ${{ github.event.before }}..${{ github.sha }} --pretty=format:"%h(%an) - %s")
+          echo "COMMIT_LOGS<<EOF" >> $GITHUB_ENV
+          echo "$commit_logs" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Lark Notification
         uses: kevin-rd/lark-notify@main
         env:
           LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
         with:
-          header_template: 'yellow'
-          header_content: 'Greetings from the Lark Notify Action'
-          message_env_tag: 'devint'
-          message_version: 'v1.0.0'
-          message_commit_logs: '4196e10 - ci(deploy-k8s): 更新 GitHub Actions 工作流 (kevin-rd)'
+          header_template: "yellow"
+          header_content: "Lark Notify Action Demo"
+          message_env_tag: "testint"
+          message_version: "${{ steps.meta.outputs.version }}"
+          message_commit_logs: "${{ env.COMMIT_LOGS }}"
 ```
 
 
